@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "anilibria-winui (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "anilibria-winui (Unpackaged)": {
+      "commandName": "Project"
+    },
+    "WSL": {
+      "commandName": "WSL2",
+      "distributionName": ""
+    }
+  }
+}
