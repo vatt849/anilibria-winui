@@ -25,11 +25,11 @@
                        Margin="28,0,0,0" />
         </Grid>
 
-        <NavigationView x:Name="nvMain"
+        <NavigationView x:Name="MainNav"
                         Grid.Row="1"
                         PaneDisplayMode="Auto"
                         PaneTitle="AniLibria"
-                        SelectionChanged="NvMain_SelectionChanged"
+                        SelectionChanged="MainNav_SelectionChanged"
                         >
             <NavigationView.MenuItems>
                 <NavigationViewItem Content="Релизы"
@@ -71,9 +71,9 @@
                 </NavigationViewItem>
             </NavigationView.FooterMenuItems>
 
-            <Frame x:Name="contentFrame">
+            <Frame x:Name="ContentFrame">
 
-                <InfoBar x:Name="ibErr"
+                <InfoBar x:Name="ErrorInfo"
                          IsOpen="True"
                          Severity="Error"
                          Title="Title"

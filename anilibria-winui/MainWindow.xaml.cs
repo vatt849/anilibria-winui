@@ -20,12 +20,12 @@ namespace anilibria
             SetTitleBar(AppTitleBar);
         }
 
-        private void NvMain_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        private void MainNav_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
             NavigationViewItem nvi = args.SelectedItemContainer as NavigationViewItem;
             var tag = nvi.Tag as string;
             Type type = Type.GetType(tag);
-            contentFrame.Navigate(type);
+            ContentFrame.Navigate(type);
         }
     }
 }

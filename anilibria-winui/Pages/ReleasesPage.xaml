@@ -10,76 +10,64 @@
       mc:Ignorable="d"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <GridView x:Name="GvReleases"
-              IsItemClickEnabled="True"
-              SelectionMode="Single"
-              ItemsSource="{x:Bind staticReleaseData}">
-        <GridView.ItemTemplate>
-            <DataTemplate x:DataType="models:Release">
-                <Grid Width="300">
-                    <Image Source="{x:Bind ImageLocation}"
-                           Stretch="UniformToFill" />
-                    <StackPanel Orientation="Vertical"
-                                Height="400"
-                                VerticalAlignment="Bottom"
-                                Padding="5,1,5,1"
-                                Background="LightGray"
-                                Opacity=".75">
-                        <TextBlock Text="{x:Bind Title}" />
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="0"
-                                       Style="{ThemeResource CaptionTextBlockStyle}"
-                                       Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" />
-                            <TextBlock Text=" Likes"
-                                       Style="{ThemeResource CaptionTextBlockStyle}"
-                                       Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" />
-                        </StackPanel>
-                    </StackPanel>
-                </Grid>
-            </DataTemplate>
-        </GridView.ItemTemplate>
-    </GridView>
-
-
-
-
-
-    <!-- XAML Code: -->
-    <!--<ItemsRepeaterScrollHost>
-        <ScrollViewer>
-            <ItemsRepeater x:Name="VariedImageSizeRepeater">
-                <ItemsRepeater.Layout>
-                    <common:VariedImageSizeLayout Width="200" />
-                </ItemsRepeater.Layout>
-                <ItemsRepeater.ItemTemplate>
-                    <DataTemplate x:DataType="l:Title">
-                        <StackPanel BorderThickness="1"
-                                    Background="LightGray"
-                                    Margin="5">
-                            <StackPanel Background="{x:Bind Color}"
-                                        Margin="8"
-                                        Height="75"
-                                        Opacity=".8">
-                                <TextBlock Text="{x:Bind Num.ToString()}"
-                                           FontSize="35"
-                                           TextAlignment="Center"
-                                           Padding="12"
-                                           Foreground="{ThemeResource SystemControlForegroundAltHighBrush}" />
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <FlipView Width="Auto"
+                  Height="Auto"
+                  BorderBrush="Black"
+                  BorderThickness="1"
+                  ItemsSource="{x:Bind releasesData, Mode=OneWay}">
+            <FlipView.ItemTemplate>
+                <DataTemplate x:DataType="models:Release">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Image Width="Auto"
+                               Source="{x:Bind PosterUrl}"
+                               Stretch="Uniform"
+                               VerticalAlignment="Center" />
+                        <Border Background="#33FFFFFF"
+                                Height="Auto"
+                                Grid.Row="1">
+                            <StackPanel Orientation="Vertical">
+                                <RelativePanel Width="Auto">
+                                    <TextBlock x:Name="ReleaseTitleText"
+                                               Text="{x:Bind Title}"
+                                               Foreground="Black"
+                                               Padding="12,12"
+                                               Style="{StaticResource TitleTextBlockStyle}"
+                                               HorizontalAlignment="Center"
+                                               RelativePanel.AlignHorizontalCenterWithPanel="True" />
+                                    <StackPanel Orientation="Horizontal"
+                                                RelativePanel.AlignRightWithPanel="True"
+                                                RelativePanel.AlignVerticalCenterWithPanel="True"
+                                                Margin="0,0,50,0">
+                                        <Button x:Name="GoSeeBtn"
+                                                Style="{StaticResource DefaultButtonStyle}"
+                                                Margin="0,0,5,0">
+                                            Смотреть
+                                        </Button>
+                                        <Button x:Name="GoReleaseBtn"
+                                                Margin="0,0,5,0">
+                                            Релиз
+                                        </Button>
+                                    </StackPanel>
+                                </RelativePanel>
+                                <TextBlock x:Name="ReleaseDescrText"
+                                           Text="{x:Bind Description}"
+                                           Foreground="Black"
+                                           Padding="12,12"
+                                           Style="{StaticResource BodyTextBlockStyle}"
+                                           HorizontalAlignment="Center" />
                             </StackPanel>
-                            <TextBlock x:Name="TitleName"
-                                       Text="{x:Bind Name}"
-                                       TextWrapping="Wrap"
-                                       Margin="15,0,10,0"
-                                       Style="{StaticResource TitleTextBlockStyle}" />
-                            <TextBlock Text="{x:Bind Ingredients}"
-                                       Style="{StaticResource BodyTextBlockStyle}"
-                                       Margin="15,0,15,15" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsRepeater.ItemTemplate>
-            </ItemsRepeater>
-        </ScrollViewer>
-    </ItemsRepeaterScrollHost>-->
-
-
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </FlipView.ItemTemplate>
+        </FlipView>
+    </Grid>
 </Page>

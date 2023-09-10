@@ -1,8 +1,9 @@
+using anilibria.Common;
 using anilibria.Models;
 using Microsoft.UI.Xaml.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Collections.ObjectModel;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -14,30 +15,27 @@ namespace anilibria.Pages
     /// </summary>
     public sealed partial class ReleasesPage : Page
     {
-        public List<Release> staticReleaseData;
+        public ObservableCollection<Release> releasesData;
 
         public ReleasesPage()
         {
             InitializeComponent();
+
+            releasesData = new();
+
             InitializeData();
         }
 
-        private void InitializeData()
+        private async Task InitializeData()
         {
-            staticReleaseData = new();
+            var svc = new HttpService();
+            string data = await svc.GetAsync(@"https://api.anilibria.tv/v3/title/updates?limit=20&filter=id,code,names,posters,genres,description");
 
-            var rnd = new Random();
-            List<Release> tempList = new List<Release>(
-                                      Enumerable.Range(0, 1000).Select(k =>
-                                        new Release
-                                        {
-                                            Title = "Title " + k.ToString(),
-                                            ImageLocation = @"F:\UserData\Pictures\5c53eb75-a102-427b-9451-28ade1f7ddd1.png"
-                                        }));
+            UpdatesResponse resp = JsonSerializer.Deserialize<UpdatesResponse>(data);
 
-            foreach (Release r in tempList)
+            foreach (var r in resp.List)
             {
-                staticReleaseData.Add(r);
+                releasesData.Add(r);
             }
         }
     }
