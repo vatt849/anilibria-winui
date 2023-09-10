@@ -12,12 +12,12 @@ namespace anilibria.Common
 
         public HttpService()
         {
-            HttpClientHandler handler = new HttpClientHandler
+            HttpClientHandler handler = new()
             {
                 AutomaticDecompression = DecompressionMethods.All
             };
 
-            _client = new HttpClient();
+            _client = new HttpClient(handler);
         }
 
         public async Task<string> GetAsync(string uri)
@@ -31,7 +31,7 @@ namespace anilibria.Common
         {
             using HttpContent content = new StringContent(data, Encoding.UTF8, contentType);
 
-            HttpRequestMessage requestMessage = new HttpRequestMessage()
+            HttpRequestMessage requestMessage = new()
             {
                 Content = content,
                 Method = HttpMethod.Post,

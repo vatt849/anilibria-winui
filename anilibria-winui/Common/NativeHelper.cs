@@ -17,8 +17,7 @@ namespace anilibria.Common
             get
             {
                 int bufferSize = 0;
-                byte byteBuffer = 0;
-                uint lastError = GetCurrentPackageId(ref bufferSize, out byteBuffer);
+                uint lastError = GetCurrentPackageId(ref bufferSize, out _);
                 bool isPackaged = true;
 
                 if (lastError == APPMODEL_ERROR_NO_PACKAGE)

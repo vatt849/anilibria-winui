@@ -23,7 +23,7 @@ namespace anilibria.Pages
 
             releasesData = new();
 
-            InitializeData();
+            _ = InitializeData();
         }
 
         private async Task InitializeData()

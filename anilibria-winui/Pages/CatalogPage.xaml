@@ -33,7 +33,7 @@
                             <TextBlock Text="{x:Bind Title}"
                                        FontSize="14"
                                        FontWeight="SemiBold"
-                                       Style="{ThemeResource BaseTextBlockStyle}"
+                                       Style="{ThemeResource TitleTextBlockStyle}"
                                        HorizontalAlignment="Left"
                                        Margin="0,0,0,6"
                                        LineHeight="20" />

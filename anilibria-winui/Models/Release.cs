@@ -27,7 +27,7 @@ namespace anilibria.Models
         [JsonPropertyName("en")]
         public string En { get; set; }
         [JsonPropertyName("alternative")]
-        public string? Alternative { get; set; }
+        public string Alternative { get; set; }
     }
 
     public class Posters
@@ -45,6 +45,6 @@ namespace anilibria.Models
         [JsonPropertyName("url")]
         public string Url { get; set; }
         [JsonPropertyName("raw_base64_file")]
-        public string? RawBase64File { get; set; }
+        public string RawBase64File { get; set; }
     }
 }
