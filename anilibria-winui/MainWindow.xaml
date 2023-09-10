@@ -29,8 +29,9 @@
                         Grid.Row="1"
                         PaneDisplayMode="Auto"
                         PaneTitle="AniLibria"
-                        SelectionChanged="MainNav_SelectionChanged"
-                        >
+                        BackRequested="MainNav_BackRequested"
+                        Loaded="MainNav_Loaded"
+                        ItemInvoked="MainNav_ItemInvoked">
             <NavigationView.MenuItems>
                 <NavigationViewItem Content="Релизы"
                                     Tag="anilibria.Pages.ReleasesPage">

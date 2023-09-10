@@ -19,6 +19,7 @@
     <None Remove="Pages\FavoritesPage.xaml" />
     <None Remove="Pages\NotificationsPage.xaml" />
     <None Remove="Pages\ReleasesPage.xaml" />
+    <None Remove="Pages\SettingsPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -47,6 +48,10 @@
   <ItemGroup>
     <Page Update="AccountPage.xaml">
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Pages\SettingsPage.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\ReleasesPage.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
