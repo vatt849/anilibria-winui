@@ -10,11 +10,23 @@
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <ListView x:Name="Control4"
+        <InfoBar x:Name="ErrorInfo"
+                 Severity="Error"
+                 Title="Title"
+                 Message="Essential app message for your users to be informed of, acknowledge, or take action on."
+                 Closing="ErrorInfo_Closing">
+            <InfoBar.IconSource>
+                <SymbolIconSource Symbol="Important" />
+            </InfoBar.IconSource>
+        </InfoBar>
+        <ListView x:Name="CatalogList"
                   Height="Auto"
                   BorderThickness="0"
                   BorderBrush="{ThemeResource SystemControlForegroundBaseMediumLowBrush}"
-                  ItemsSource="{x:Bind releasesData}">
+                  ItemsSource="{x:Bind ReleasesData}"
+                  DataFetchSize="1"
+                  IncrementalLoadingTrigger="Edge"
+                  IncrementalLoadingThreshold="5">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:Release">
                     <Grid Margin="0,12,0,12"

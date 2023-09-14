@@ -1,9 +1,13 @@
+using anilibria.Common;
+using anilibria.Models;
 using anilibria.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Navigation;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -16,12 +20,32 @@ namespace anilibria
     /// </summary>
     public sealed partial class MainWindow : Window
     {
+        List<Release> suggestions = new();
+
+        private readonly Anilibria apiClient = new();
+
         public MainWindow()
         {
             InitializeComponent();
 
             ExtendsContentIntoTitleBar = true;
             SetTitleBar(AppTitleBar);
+
+            Activated += MainWindow_Activated;
+        }
+
+        private void MainWindow_Activated(object sender, WindowActivatedEventArgs args)
+        {
+            if (args.WindowActivationState == WindowActivationState.Deactivated)
+            {
+                AppTitleTextBlock.Foreground =
+                    (SolidColorBrush)App.Current.Resources["WindowCaptionForegroundDisabled"];
+            }
+            else
+            {
+                AppTitleTextBlock.Foreground =
+                    (SolidColorBrush)App.Current.Resources["WindowCaptionForeground"];
+            }
         }
 
         private void MainNav_BackRequested(NavigationView sender,
@@ -103,9 +127,40 @@ namespace anilibria
                             .OfType<NavigationViewItem>()
                             .FirstOrDefault(i => i.Tag.Equals(ContentFrame.SourcePageType.FullName.ToString()), null);
 
-                MainNav.Header =
-                    ((NavigationViewItem)MainNav.SelectedItem)?.Content?.ToString();
+                MainNav.Header = ((NavigationViewItem)MainNav.SelectedItem)?.Content?.ToString();
+            }
+        }
 
+        private async void NavSearch_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs e)
+        {
+            if (e.Reason == AutoSuggestionBoxTextChangeReason.UserInput && sender.Text.Length > 2)
+            {
+                var data = await apiClient.Search(sender.Text);
+
+                suggestions = data.List;
+                sender.ItemsSource = suggestions;
+            }
+            else
+            {
+                suggestions.Clear();
+                sender.ItemsSource = null;
+            }
+        }
+
+        private void NavSearch_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs e)
+        {
+
+        }
+
+        private void NavSearch_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs e)
+        {
+            if (e.SelectedItem != null)
+            {
+                // User selected an item from the suggestion list, take an action on it here.
+            }
+            else
+            {
+                // Use args.QueryText to determine what to do.
             }
         }
     }

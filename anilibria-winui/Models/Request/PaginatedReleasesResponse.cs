@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace anilibria.Models
+namespace anilibria.Models.Request
 {
-    class UpdatesResponse
+    public class PaginatedReleasesResponse
     {
         [JsonPropertyName("list")]
         public List<Release> List { get; set; }
         [JsonPropertyName("pagination")]
-        public ListResponsePagination Pagination { get; set; }
+        public ResponsePagination Pagination { get; set; }
     }
 }

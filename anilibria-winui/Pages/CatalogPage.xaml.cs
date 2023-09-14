@@ -1,9 +1,9 @@
 using anilibria.Common;
+using anilibria.Exceptions;
 using anilibria.Models;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using System.Collections.ObjectModel;
-using System.Text.Json;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -15,27 +15,79 @@ namespace anilibria.Pages
     /// </summary>
     public sealed partial class CatalogPage : Page
     {
-        public ObservableCollection<Release> releasesData;
+        public IncrementalObservableCollection<Release> ReleasesData { get; set; }
+
+        private readonly Anilibria apiClient = new();
 
         public CatalogPage()
         {
             InitializeComponent();
 
-            releasesData = new();
-
-            _ = InitializeData();
+            InitializeData();
         }
 
-        private async Task InitializeData()
+        const int ITEMS_PER_PAGE = 10;
+
+        private async void InitializeData()
         {
-            var svc = new HttpService();
-            string data = await svc.GetAsync(@"https://api.anilibria.tv/v3/title/updates?limit=50&filter=id,code,names,posters,genres,description");
-
-            UpdatesResponse resp = JsonSerializer.Deserialize<UpdatesResponse>(data);
-
-            foreach (var r in resp.List)
+            try
             {
-                releasesData.Add(r);
+                var data = await apiClient.GetReleases(ITEMS_PER_PAGE, 1);
+
+                ReleasesData = new()
+                {
+                    TotalResults = data.Pagination.TotalItems,
+                    PageNumber = 1,
+                    LoadCallback = async () =>
+                    {
+                        List<Release> list = new();
+                        int total = 0;
+
+                        try
+                        {
+                            var data = await apiClient.GetReleases(ITEMS_PER_PAGE, ++ReleasesData.PageNumber);
+
+                            list = data.List;
+                            total = data.Pagination.TotalItems;
+                        }
+                        catch (ApiException ex)
+                        {
+                            ReleasesData.PageNumber--;
+
+                            ErrorInfo.Title = "Api error";
+                            ErrorInfo.Message = string.Format("{0} ({1})", ex.Message, ex.Code);
+                            ErrorInfo.IsOpen = true;
+
+                            CatalogList.Visibility = Visibility.Collapsed;
+                        }
+
+                        return (list, total);
+                    }
+                };
+
+                foreach (var r in data.List)
+                {
+                    ReleasesData.Add(r);
+                }
+
+                Bindings.Update();
+                CatalogList.Visibility = Visibility.Visible;
+            }
+            catch (ApiException ex)
+            {
+                ErrorInfo.Title = "Api error";
+                ErrorInfo.Message = string.Format("{0} ({1})", ex.Message, ex.Code);
+                ErrorInfo.IsOpen = true;
+
+                CatalogList.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void ErrorInfo_Closing(InfoBar sender, InfoBarClosingEventArgs args)
+        {
+            if (args.Reason == InfoBarCloseReason.CloseButton)
+            {
+                _ = ReleasesData.LoadMoreItemsAsync(0);
             }
         }
     }

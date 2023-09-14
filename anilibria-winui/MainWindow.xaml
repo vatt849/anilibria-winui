@@ -4,7 +4,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d">
+        xmlns:models="using:anilibria.Models"
+        mc:Ignorable="d"
+        Title="AniLibria">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="32" />
@@ -13,11 +15,13 @@
 
         <Grid x:Name="AppTitleBar">
             <Image Source="Assets\Square44x44Logo.altform-unplated_targetsize-256.png"
+                   Grid.Column="1"
                    HorizontalAlignment="Left"
                    Width="16"
                    Height="16"
                    Margin="8,0" />
             <TextBlock x:Name="AppTitleTextBlock"
+                       Grid.Column="1"
                        Text="AniLibria"
                        TextWrapping="NoWrap"
                        Style="{StaticResource CaptionTextBlockStyle}"
@@ -32,6 +36,48 @@
                         BackRequested="MainNav_BackRequested"
                         Loaded="MainNav_Loaded"
                         ItemInvoked="MainNav_ItemInvoked">
+            <NavigationView.AutoSuggestBox>
+                <AutoSuggestBox x:Name="NavSearch"
+                                PlaceholderText="Поиск релиза"
+                                TextChanged="NavSearch_TextChanged"
+                                QueryIcon="Find"
+                                QuerySubmitted="NavSearch_QuerySubmitted"
+                                SuggestionChosen="NavSearch_SuggestionChosen">
+                    <AutoSuggestBox.ItemTemplate>
+                        <DataTemplate x:DataType="models:Release">
+                            <Grid Margin="0,12,0,12"
+                                  AutomationProperties.Name="{x:Bind Title}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"
+                                                      MaxWidth="50" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Image Source="{x:Bind ThumbnailUrl}"
+                                       MaxHeight="50"
+                                       Stretch="Uniform" />
+
+                                <StackPanel Margin="12,0,0,0"
+                                            Grid.Column="1">
+                                    <TextBlock Text="{x:Bind Title}"
+                                               FontSize="14"
+                                               FontWeight="SemiBold"
+                                               Style="{ThemeResource TitleTextBlockStyle}"
+                                               HorizontalAlignment="Left"
+                                               Margin="0,0,0,6"
+                                               LineHeight="20" />
+                                    <TextBlock Text="{x:Bind Names.En}"
+                                               FontSize="14"
+                                               FontWeight="SemiBold"
+                                               Style="{ThemeResource BodyStrongTextBlockStyle}"
+                                               HorizontalAlignment="Left"
+                                               Margin="0,0,0,6"
+                                               LineHeight="20" />
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </AutoSuggestBox.ItemTemplate>
+                </AutoSuggestBox>
+            </NavigationView.AutoSuggestBox>
             <NavigationView.MenuItems>
                 <NavigationViewItem Content="Релизы"
                                     Tag="anilibria.Pages.ReleasesPage">
@@ -78,7 +124,7 @@
                          IsOpen="True"
                          Severity="Error"
                          Title="Title"
-                         Message="Essential app message for your users to be informed of, acknowledge, or take action on." />
+                         Message="No content to display" />
             </Frame>
         </NavigationView>
     </Grid>

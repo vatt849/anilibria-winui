@@ -16,6 +16,7 @@ namespace anilibria.Models
         [JsonPropertyName("posters")]
         public Posters Posters { get; set; }
         public string PosterUrl { get => @"https://anilibriaqt.anilib.top" + Posters.Original.Url; }
+        public string ThumbnailUrl { get => @"https://anilibriaqt.anilib.top" + Posters.Small.Url; }
         [JsonPropertyName("genres")]
         public string[] Genres { get; set; }
     }

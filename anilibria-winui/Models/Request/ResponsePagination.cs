@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace anilibria.Models
+namespace anilibria.Models.Request
 {
-    class ListResponsePagination
+    public class ResponsePagination
     {
         [JsonPropertyName("pages")]
         public int Pages { get; set; }

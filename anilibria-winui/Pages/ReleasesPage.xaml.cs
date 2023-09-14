@@ -1,9 +1,9 @@
 using anilibria.Common;
+using anilibria.Exceptions;
 using anilibria.Models;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.ObjectModel;
-using System.Text.Json;
-using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -15,27 +15,44 @@ namespace anilibria.Pages
     /// </summary>
     public sealed partial class ReleasesPage : Page
     {
-        public ObservableCollection<Release> releasesData;
+        public ObservableCollection<Release> ReleasesData;
+        private readonly Anilibria apiClient = new();
 
         public ReleasesPage()
         {
             InitializeComponent();
 
-            releasesData = new();
+            ReleasesData = new();
 
-            _ = InitializeData();
+            InitializeData();
         }
 
-        private async Task InitializeData()
+        private async void InitializeData()
         {
-            var svc = new HttpService();
-            string data = await svc.GetAsync(@"https://api.anilibria.tv/v3/title/updates?limit=20&filter=id,code,names,posters,genres,description");
-
-            UpdatesResponse resp = JsonSerializer.Deserialize<UpdatesResponse>(data);
-
-            foreach (var r in resp.List)
+            try
             {
-                releasesData.Add(r);
+                var resp = await apiClient.GetReleases(5);
+
+                foreach (var r in resp.List)
+                {
+                    ReleasesData.Add(r);
+                }
+                ReleasesView.Visibility = Visibility.Visible;
+            }
+            catch (ApiException ex)
+            {
+                ErrorInfo.Title = "Api error";
+                ErrorInfo.Message = string.Format("{0} ({1})", ex.Message, ex.Code);
+                ErrorInfo.IsOpen = true;
+                ReleasesView.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void ErrorInfo_Closing(InfoBar sender, InfoBarClosingEventArgs args)
+        {
+            if (args.Reason == InfoBarCloseReason.CloseButton)
+            {
+                InitializeData();
             }
         }
     }

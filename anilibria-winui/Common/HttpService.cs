@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Specialized;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -20,14 +22,18 @@ namespace anilibria.Common
             _client = new HttpClient(handler);
         }
 
-        public async Task<string> GetAsync(string uri)
+        public async Task<HttpResponse> GetAsync(string uri)
         {
             using HttpResponseMessage response = await _client.GetAsync(uri);
 
-            return await response.Content.ReadAsStringAsync();
+            return new HttpResponse()
+            {
+                Content = await response.Content.ReadAsStringAsync(),
+                StatusCode = response.StatusCode
+            };
         }
 
-        public async Task<string> PostAsync(string uri, string data, string contentType)
+        public async Task<HttpResponse> PostAsync(string uri, string data, string contentType)
         {
             using HttpContent content = new StringContent(data, Encoding.UTF8, contentType);
 
@@ -40,7 +46,34 @@ namespace anilibria.Common
 
             using HttpResponseMessage response = await _client.SendAsync(requestMessage);
 
-            return await response.Content.ReadAsStringAsync();
+            return new HttpResponse()
+            {
+                Content = await response.Content.ReadAsStringAsync(),
+                StatusCode = response.StatusCode
+            };
         }
+
+        public string ToQueryString(NameValueCollection nvc)
+        {
+            var array = (
+                from key in nvc.AllKeys
+                from value in nvc.GetValues(key)
+                select string.Format(
+                    "{0}={1}",
+                    key,
+                    value
+                )
+                //HttpUtility.UrlEncode(key),
+                //HttpUtility.UrlEncode(value))
+                ).ToArray();
+
+            return "?" + string.Join("&", array);
+        }
+    }
+
+    public class HttpResponse
+    {
+        public string Content { get; set; }
+        public HttpStatusCode StatusCode { get; set; }
     }
 }
