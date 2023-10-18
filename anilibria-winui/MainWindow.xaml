@@ -6,7 +6,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:models="using:anilibria.Models"
         mc:Ignorable="d"
-        Title="AniLibria">
+        Title="AniLibria"
+        >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="32" />
@@ -119,7 +120,6 @@
             </NavigationView.FooterMenuItems>
 
             <Frame x:Name="ContentFrame">
-
                 <InfoBar x:Name="ErrorInfo"
                          IsOpen="True"
                          Severity="Error"

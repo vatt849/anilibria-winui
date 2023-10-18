@@ -55,5 +55,21 @@ namespace anilibria.Pages
                 InitializeData();
             }
         }
+
+        private void GoSeeBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void GoReleaseBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var r = (Release)ReleasesView.SelectedItem;
+            if (r != null)
+            {
+                var app = Application.Current as App;
+
+                app?.MWindow.NavigateToTitlePage(r);
+            }
+        }
     }
 }

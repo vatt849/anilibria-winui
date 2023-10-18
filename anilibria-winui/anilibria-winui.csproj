@@ -14,12 +14,16 @@
     <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Content Remove="Assets\gray-color-solid-background.png" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="AccountPage.xaml" />
     <None Remove="Pages\CatalogPage.xaml" />
     <None Remove="Pages\FavoritesPage.xaml" />
     <None Remove="Pages\NotificationsPage.xaml" />
     <None Remove="Pages\ReleasesPage.xaml" />
     <None Remove="Pages\SettingsPage.xaml" />
+    <None Remove="Pages\TitlePage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -71,6 +75,11 @@
   <ItemGroup>
     <Folder Include="Models\Helpers\" />
     <Folder Include="Pages\Helpers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\TitlePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <!-- 

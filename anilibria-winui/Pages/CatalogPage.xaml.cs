@@ -90,5 +90,16 @@ namespace anilibria.Pages
                 _ = ReleasesData.LoadMoreItemsAsync(0);
             }
         }
+
+        private void CatalogList_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var r = (Release)e.ClickedItem;
+            if (r != null)
+            {
+                var app = Application.Current as App;
+
+                app?.MWindow.NavigateToTitlePage(r);
+            }
+        }
     }
 }

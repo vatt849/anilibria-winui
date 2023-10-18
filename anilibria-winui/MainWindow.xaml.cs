@@ -54,7 +54,7 @@ namespace anilibria
             TryGoBack();
         }
 
-        private bool TryGoBack()
+        internal bool TryGoBack()
         {
             if (!ContentFrame.CanGoBack)
                 return false;
@@ -67,6 +67,26 @@ namespace anilibria
 
             ContentFrame.GoBack();
             return true;
+        }
+
+        internal bool TryGoForward()
+        {
+            if (!ContentFrame.CanGoForward)
+                return false;
+
+            // Don't go back if the nav pane is overlayed.
+            if (MainNav.IsPaneOpen &&
+                (MainNav.DisplayMode == NavigationViewDisplayMode.Compact ||
+                 MainNav.DisplayMode == NavigationViewDisplayMode.Minimal))
+                return false;
+
+            ContentFrame.GoForward();
+            return true;
+        }
+
+        internal void NavigateToTitlePage(Release r)
+        {
+            ContentFrame.Navigate(typeof(TitlePage), r.Id);
         }
 
         private void MainNav_Loaded(object sender, RoutedEventArgs e)
@@ -102,7 +122,7 @@ namespace anilibria
             Type preNavPageType = ContentFrame.CurrentSourcePageType;
 
             // Only navigate if the selected page isn't currently loaded.
-            if (navPageType is not null && !Type.Equals(preNavPageType, navPageType))
+            if (navPageType is not null && !Equals(preNavPageType, navPageType))
             {
                 ContentFrame.Navigate(navPageType, null, transitionInfo);
             }
@@ -154,14 +174,20 @@ namespace anilibria
 
         private void NavSearch_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs e)
         {
-            if (e.SelectedItem != null)
+            if (e.SelectedItem == null)
             {
-                // User selected an item from the suggestion list, take an action on it here.
+                return;
             }
-            else
+
+            var r = (Release)e.SelectedItem;
+            if (r == null)
             {
-                // Use args.QueryText to determine what to do.
+                return;
             }
+
+            sender.Text = "";
+
+            NavigateToTitlePage(r);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using anilibria.Exceptions;
+using anilibria.Models;
 using anilibria.Models.Request;
 using Flurl;
 using System.Diagnostics;
@@ -85,6 +86,29 @@ namespace anilibria.Common
             }
 
             return JsonSerializer.Deserialize<PaginatedReleasesResponse>(response.Content);
+        }
+
+        public async Task<Release> GetRelease(int id)
+        {
+            var url = new Url(API_BASE_V3)
+                .AppendPathSegment("/title")
+                .SetQueryParams(new
+                {
+                    id
+                });
+
+            Debug.WriteLine($"get: {url}");
+
+            var response = await service.GetAsync(url);
+
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                var errResp = JsonSerializer.Deserialize<ErrorResponse>(response.Content);
+
+                throw new ApiException(errResp.Error.Message, errResp.Error.Code);
+            }
+
+            return JsonSerializer.Deserialize<Release>(response.Content);
         }
     }
 }
