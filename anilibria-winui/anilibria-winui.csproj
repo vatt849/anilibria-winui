@@ -23,9 +23,9 @@
     <None Remove="Pages\FavoritesPage.xaml" />
     <None Remove="Pages\NotificationsPage.xaml" />
     <None Remove="Pages\PlayerPage.xaml" />
+    <None Remove="Pages\ReleasePage.xaml" />
     <None Remove="Pages\ReleasesPage.xaml" />
     <None Remove="Pages\SettingsPage.xaml" />
-    <None Remove="Pages\TitlePage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -86,7 +86,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Pages\TitlePage.xaml">
+    <Page Update="Pages\ReleasePage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

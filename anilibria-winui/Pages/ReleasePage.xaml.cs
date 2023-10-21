@@ -16,14 +16,14 @@ namespace anilibria.Pages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class TitlePage : Page
+    public sealed partial class ReleasePage : Page
     {
         internal Release release;
         internal ObservableCollection<Episode> Episodes = new();
 
-        public TitlePage()
+        public ReleasePage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)

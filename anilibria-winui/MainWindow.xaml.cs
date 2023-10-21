@@ -92,7 +92,7 @@ namespace anilibria
 
         internal void NavigateToTitlePage(Release r)
         {
-            ContentFrame.Navigate(typeof(TitlePage), r.Id);
+            ContentFrame.Navigate(typeof(ReleasePage), r.Id);
         }
 
         private void MainNav_DisplayModeChanged(NavigationView sender, NavigationViewDisplayModeChangedEventArgs args)
