@@ -5,29 +5,38 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:models="using:anilibria.Models"
+        xmlns:animations="using:CommunityToolkit.WinUI.Animations"
         mc:Ignorable="d"
-        Title="AniLibria"
-        >
+        Title="AniLibria">
+    <Window.SystemBackdrop>
+        <MicaBackdrop Kind="BaseAlt" />
+    </Window.SystemBackdrop>
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="32" />
-            <RowDefinition />
+            <RowDefinition Height="48" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-
-        <Grid x:Name="AppTitleBar">
-            <Image Source="Assets\Square44x44Logo.altform-unplated_targetsize-256.png"
-                   Grid.Column="1"
-                   HorizontalAlignment="Left"
-                   Width="16"
-                   Height="16"
-                   Margin="8,0" />
-            <TextBlock x:Name="AppTitleTextBlock"
-                       Grid.Column="1"
-                       Text="AniLibria"
-                       TextWrapping="NoWrap"
-                       Style="{StaticResource CaptionTextBlockStyle}"
-                       VerticalAlignment="Center"
-                       Margin="28,0,0,0" />
+        <Grid x:Name="AppTitleBar"
+              Height="{Binding ElementName=navigationView, Path=CompactPaneLength}"
+              Margin="16,0,0,0"
+              VerticalAlignment="Top"
+              IsHitTestVisible="True">
+            <animations:Implicit.Animations>
+                <animations:OffsetAnimation Duration="0:0:0.3" />
+            </animations:Implicit.Animations>
+            <StackPanel Orientation="Horizontal">
+                <Image Width="32"
+                       Height="32"
+                       HorizontalAlignment="Left"
+                       Source="/Assets/logo256.png" />
+                <TextBlock x:Name="AppTitleBarText"
+                           Text="AniLibria"
+                           Margin="16,0,0,0"
+                           VerticalAlignment="Center"
+                           Style="{StaticResource CaptionTextBlockStyle}"
+                           TextWrapping="NoWrap" />
+            </StackPanel>
         </Grid>
 
         <NavigationView x:Name="MainNav"
@@ -111,8 +120,7 @@
             </NavigationView.MenuItems>
             <NavigationView.FooterMenuItems>
                 <NavigationViewItem Content="Аккаунт"
-                                    Tag="anilibria.Pages.AccountPage"
-                                    >
+                                    Tag="anilibria.Pages.AccountPage">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xE946;" />
                     </NavigationViewItem.Icon>

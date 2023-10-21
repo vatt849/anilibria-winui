@@ -94,7 +94,8 @@ namespace anilibria.Common
                 .AppendPathSegment("/title")
                 .SetQueryParams(new
                 {
-                    id
+                    id,
+                    playlist_type = "array"
                 });
 
             Debug.WriteLine($"get: {url}");

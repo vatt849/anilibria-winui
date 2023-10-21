@@ -27,7 +27,7 @@
                   Width="Auto"
                   Height="Auto"
                   BorderBrush="Black"
-                  BorderThickness="1"
+                  BorderThickness="0"
                   ItemsSource="{x:Bind ReleasesData, Mode=OneWay}"
                   Margin="0,0,0,0">
             <FlipView.ItemTemplate>
@@ -75,7 +75,8 @@
                                            Foreground="Black"
                                            Padding="12,12"
                                            Style="{StaticResource BodyTextBlockStyle}"
-                                           HorizontalAlignment="Center" />
+                                           TextWrapping="Wrap"
+                                           HorizontalAlignment="Stretch" />
                             </StackPanel>
                         </Border>
                     </Grid>

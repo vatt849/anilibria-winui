@@ -1,6 +1,7 @@
 using anilibria.Common;
 using anilibria.Models;
 using anilibria.Pages;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
@@ -31,6 +32,13 @@ namespace anilibria
             ExtendsContentIntoTitleBar = true;
             SetTitleBar(AppTitleBar);
 
+            var titleBar = AppWindow.TitleBar;
+
+            if (AppWindowTitleBar.IsCustomizationSupported())
+            {
+                //titleBar.BackgroundColor = Color.FromArgb(0, 0, 0, 0);
+            }
+
             Activated += MainWindow_Activated;
         }
 
@@ -38,13 +46,11 @@ namespace anilibria
         {
             if (args.WindowActivationState == WindowActivationState.Deactivated)
             {
-                AppTitleTextBlock.Foreground =
-                    (SolidColorBrush)App.Current.Resources["WindowCaptionForegroundDisabled"];
+                AppTitleBarText.Foreground = (SolidColorBrush)App.Current.Resources["WindowCaptionForegroundDisabled"];
             }
             else
             {
-                AppTitleTextBlock.Foreground =
-                    (SolidColorBrush)App.Current.Resources["WindowCaptionForeground"];
+                AppTitleBarText.Foreground = (SolidColorBrush)App.Current.Resources["WindowCaptionForeground"];
             }
         }
 
@@ -87,6 +93,20 @@ namespace anilibria
         internal void NavigateToTitlePage(Release r)
         {
             ContentFrame.Navigate(typeof(TitlePage), r.Id);
+        }
+
+        private void MainNav_DisplayModeChanged(NavigationView sender, NavigationViewDisplayModeChangedEventArgs args)
+        {
+            if (args.DisplayMode == NavigationViewDisplayMode.Compact || args.DisplayMode == NavigationViewDisplayMode.Minimal)
+            {
+                AppTitleBar.Margin = new Thickness(16, 0, 0, 0);
+                AppTitleBarText.Margin = new Thickness(16, 0, 0, 0);
+            }
+            else
+            {
+                AppTitleBar.Margin = new Thickness(16, 0, 0, 0);
+                AppTitleBarText.Margin = new Thickness(16, 0, 0, 0);
+            }
         }
 
         private void MainNav_Loaded(object sender, RoutedEventArgs e)
