@@ -2,7 +2,6 @@ using anilibria.Common;
 using anilibria.Models;
 using anilibria.Pages;
 using anilibria.Pages.Helpers;
-using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
@@ -32,13 +31,6 @@ namespace anilibria
 
             ExtendsContentIntoTitleBar = true;
             SetTitleBar(AppTitleBar);
-
-            var titleBar = AppWindow.TitleBar;
-
-            if (AppWindowTitleBar.IsCustomizationSupported())
-            {
-                //titleBar.BackgroundColor = Color.FromArgb(0, 0, 0, 0);
-            }
 
             Activated += MainWindow_Activated;
         }
@@ -214,6 +206,24 @@ namespace anilibria
             sender.Text = "";
 
             NavigateToTitlePage(r);
+        }
+
+        public void HideInterface()
+        {
+            AppTitleBar.Visibility = Visibility.Collapsed;
+            ExtendsContentIntoTitleBar = false;
+            TitleBarRowDefinition.Height = new(0);
+
+            MainNav.IsPaneVisible = false;
+        }
+
+        public void ShowInterface()
+        {
+            AppTitleBar.Visibility = Visibility.Visible;
+            ExtendsContentIntoTitleBar = true;
+            TitleBarRowDefinition.Height = new(48);
+
+            MainNav.IsPaneVisible = true;
         }
     }
 }

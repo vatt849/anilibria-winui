@@ -130,15 +130,21 @@ namespace anilibria.Pages
 
         private void MediaPlayerElementConrolDoubleTapped(object sender, RoutedEventArgs e)
         {
+            var app = Application.Current as App;
+
             if (_appWindow.Presenter.Kind == AppWindowPresenterKind.FullScreen)
             {
                 _appWindow.SetPresenter(AppWindowPresenterKind.Default);
                 EpisodePlayer.IsFullWindow = false;
+
+                app?.MWindow.ShowInterface();
             }
             else
             {
                 _appWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
                 EpisodePlayer.IsFullWindow = true;
+
+                app?.MWindow.HideInterface();
             }
         }
 

@@ -30,12 +30,10 @@ namespace anilibria
             m_window = new MainWindow();
             m_window.Activate();
 
-            //m_window.Dispatcher.AcceleratorKeyActivated +=
-            //CoreDispatcher_AcceleratorKeyActivated;
+            //m_window.Dispatcher.AcceleratorKeyActivated += CoreDispatcher_AcceleratorKeyActivated;
 
             // Add support for system back requests. 
-            //SystemNavigationManager.GetForCurrentView().BackRequested
-            //    += System_BackRequested;
+            //SystemNavigationManager.GetForCurrentView().BackRequested += System_BackRequested;
 
             // Add support for mouse navigation buttons. 
             //Window.Current.CoreWindow.PointerPressed += CoreWindow_PointerPressed;
