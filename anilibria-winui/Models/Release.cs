@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.UI.Xaml;
+using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
@@ -142,6 +143,9 @@ namespace anilibria.Models
         [JsonPropertyName("hls")]
         public EpisodeHLS HLS { get; set; }
         public string HLSDescr { get => $"{(HLS.FHD != "" ? "1080" : "")} {(HLS.HD != "" ? "720" : "")} {(HLS.SD != "" ? "480" : "")}".Trim(); }
+
+        public bool Viewed { get; set; }
+        public Visibility ViewedVisibility() => Viewed ? Visibility.Visible : Visibility.Collapsed;
     }
 
     public class EpisodeSkips

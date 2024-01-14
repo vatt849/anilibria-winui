@@ -77,6 +77,11 @@
                                 Margin="0,0,8,0"
                                 BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}">
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon Glyph="&#xE734;"
+                                          Margin="0,0,10,0"/>
+                                <TextBlock x:Name="FavBtnText" />
+                            </StackPanel>
                         </Button>
                         <Border CornerRadius="8"
                                 Padding="12"
@@ -138,7 +143,8 @@
                                        LineHeight="20" />
                             <ProgressBar x:Name="EpisodesProgress"
                                          HorizontalAlignment="Stretch"
-                                         VerticalAlignment="Center" />
+                                         VerticalAlignment="Center"
+                                         Value="{x:Bind ViewedPercent, Mode=OneWay}"/>
                         </StackPanel>
                     </Border>
                     <ListView x:Name="EpisodesList"
@@ -177,15 +183,45 @@
                                         <StackPanel Orientation="Horizontal">
                                         </StackPanel>
                                     </StackPanel>
-                                    <TextBlock Text="[ACTIONS]"
-                                               FontSize="14"
-                                               FontWeight="SemiBold"
-                                               Style="{ThemeResource TitleTextBlockStyle}"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"
-                                               Margin="0,0,0,6"
-                                               LineHeight="20"
-                                               Grid.Column="1" />
+                                    <Grid Grid.Column="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"
+                                                              MinWidth="50" />
+                                            <ColumnDefinition Width="Auto"
+                                                              MinWidth="100" />
+                                        </Grid.ColumnDefinitions>
+                                        <FontIcon x:Name="ViewedMark"
+                                                  Tag="{x:Bind EpisodeNum}"
+                                                  Glyph="&#xE73E;"
+                                                  Visibility="{Binding Viewed}"
+                                                  Grid.Column="0" />
+                                        <DropDownButton AutomationProperties.Name="Actions"
+                                                        Grid.Column="1">
+                                            <DropDownButton.Content>
+                                                <FontIcon Glyph="&#xE712;" />
+                                            </DropDownButton.Content>
+                                            <DropDownButton.Flyout>
+                                                <MenuFlyout Placement="Bottom">
+                                                    <MenuFlyoutItem x:Name="EpisodeMarkViewed"
+                                                                    Text="Пометить как просмотренное"
+                                                                    Click="EpisodeMarkViewed_Click"
+                                                                    Tag="{x:Bind EpisodeNum}">
+                                                        <MenuFlyoutItem.Icon>
+                                                            <FontIcon Glyph="&#xE73E;" />
+                                                        </MenuFlyoutItem.Icon>
+                                                    </MenuFlyoutItem>
+                                                    <MenuFlyoutItem x:Name="EpisodeUnmarkViewed"
+                                                                    Text="Снять отметку о просмотре"
+                                                                    Click="EpisodeUnmarkViewed_Click"
+                                                                    Tag="{x:Bind EpisodeNum}">
+                                                        <MenuFlyoutItem.Icon>
+                                                            <FontIcon Glyph="&#xE8BB;" />
+                                                        </MenuFlyoutItem.Icon>
+                                                    </MenuFlyoutItem>
+                                                </MenuFlyout>
+                                            </DropDownButton.Flyout>
+                                        </DropDownButton>
+                                    </Grid>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
