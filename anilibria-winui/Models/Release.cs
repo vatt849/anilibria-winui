@@ -131,7 +131,9 @@ namespace anilibria.Models
         public int EpisodeNum { get; set; }
         [JsonPropertyName("name")]
         public string Name { get; set; }
-        public string Title { get => $"Серия {EpisodeNum} ({Created.ToShortDateString()}) {(Name != "" ? "" + Name : "")}"; }
+        public string Title { get => $"Серия {EpisodeNum} ({Created.ToShortDateString()}) {(Name != "" ? "" + Name : "")}".Trim(); }
+        [JsonPropertyName("preview")]
+        public string Preview { get; set; }
         [JsonPropertyName("uuid")]
         public string Uuid { get; set; }
         [JsonPropertyName("created_timestamp")]
@@ -139,7 +141,15 @@ namespace anilibria.Models
         public DateTime Created { get => DateTimeOffset.FromUnixTimeSeconds(CreatedTimestamp).UtcDateTime.ToLocalTime(); }
         [JsonPropertyName("hls")]
         public EpisodeHLS HLS { get; set; }
-        public string HLSDescr { get => $"{(HLS.FHD != "" ? "1080" : "")} {(HLS.HD != "" ? "720" : "")} {(HLS.SD != "" ? "480" : "")}"; }
+        public string HLSDescr { get => $"{(HLS.FHD != "" ? "1080" : "")} {(HLS.HD != "" ? "720" : "")} {(HLS.SD != "" ? "480" : "")}".Trim(); }
+    }
+
+    public class EpisodeSkips
+    {
+        [JsonPropertyName("opening")]
+        public int[] Opening { get; set; }
+        [JsonPropertyName("ending")]
+        public int[] Ending { get; set; }
     }
 
     public class EpisodeHLS

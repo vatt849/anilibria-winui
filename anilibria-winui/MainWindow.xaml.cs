@@ -1,6 +1,7 @@
 using anilibria.Common;
 using anilibria.Models;
 using anilibria.Pages;
+using anilibria.Pages.Helpers;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -93,6 +94,11 @@ namespace anilibria
         internal void NavigateToTitlePage(Release r)
         {
             ContentFrame.Navigate(typeof(ReleasePage), r.Id);
+        }
+
+        internal void NavigateToPlayerPage(PlayerData data)
+        {
+            ContentFrame.Navigate(typeof(PlayerPage), data);
         }
 
         private void MainNav_DisplayModeChanged(NavigationView sender, NavigationViewDisplayModeChangedEventArgs args)

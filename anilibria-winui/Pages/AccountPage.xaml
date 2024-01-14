@@ -11,7 +11,11 @@
 
     <Grid>
         <StackPanel Orientation="Vertical">
-            <TextBlock Text="Login"
+            <TextBlock Text="Раздел в разработке"
+                       FontSize="36"
+                       Margin="4"
+                       TextAlignment="Center" />
+            <!--<TextBlock Text="Login"
                        FontSize="36"
                        Margin="4"
                        TextAlignment="Center" />
@@ -63,7 +67,7 @@
                        FontSize="24"
                        TextAlignment="Center"
                        TextWrapping="Wrap"
-                       Text="Please Note: To demonstrate a login, validation will only occur using the default username 'sampleUsername'" />
+                       Text="Please Note: To demonstrate a login, validation will only occur using the default username 'sampleUsername'" />-->
         </StackPanel>
     </Grid>
 </Page>

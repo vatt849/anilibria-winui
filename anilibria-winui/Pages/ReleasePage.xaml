@@ -146,7 +146,10 @@
                               BorderBrush="{ThemeResource SystemControlForegroundBaseMediumLowBrush}"
                               ItemsSource="{x:Bind Episodes, Mode=OneWay}"
                               HorizontalAlignment="Stretch"
-                              VerticalAlignment="Stretch">
+                              VerticalAlignment="Stretch"
+                              SelectionMode="None"
+                              IsItemClickEnabled="True"
+                              ItemClick="EpisodesList_ItemClick">
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="models:Episode">
                                 <Grid Margin="0,12,0,12"

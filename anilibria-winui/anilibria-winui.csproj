@@ -38,12 +38,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Common" Version="8.2.1" />
-    <PackageReference Include="CommunityToolkit.WinUI.Animations" Version="8.0.230907" />
-    <PackageReference Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.0.230907" />
-    <PackageReference Include="Flurl" Version="3.0.7" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231008000" />
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
+    <PackageReference Include="CommunityToolkit.Common" Version="8.2.2" />
+    <PackageReference Include="CommunityToolkit.WinUI.Animations" Version="8.0.240109" />
+    <PackageReference Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.0.240109" />
+    <PackageReference Include="Flurl" Version="4.0.0" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231219000" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.2428" />
+    <PackageReference Include="PlaylistsNET" Version="1.4.1" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
@@ -78,7 +79,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\Helpers\" />
-    <Folder Include="Pages\Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <Page Update="Pages\PlayerPage.xaml">

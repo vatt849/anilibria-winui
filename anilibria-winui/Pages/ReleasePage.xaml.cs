@@ -96,5 +96,20 @@ namespace anilibria.Pages
                 app?.MWindow.TryGoBack();
             }
         }
+
+        private void EpisodesList_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var ep = (Episode)e.ClickedItem;
+            if (ep != null)
+            {
+                var app = Application.Current as App;
+
+                app?.MWindow.NavigateToPlayerPage(new()
+                {
+                    Release = release,
+                    Episode = ep,
+                });
+            }
+        }
     }
 }
